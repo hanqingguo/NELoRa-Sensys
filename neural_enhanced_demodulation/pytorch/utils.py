@@ -73,24 +73,6 @@ def generate_dataset(root_path, data_dir, ratio_bt_train_and_test,
         print("length of training and testing data is {},{}".format(len(files_train), len(files_test)))
     return [files_train, files_test]
 
-
-def generate_dataset_overfitting(root_path, data_dir,
-                                 code_list, snr_list, bw_list, sf_list,
-                                 instance_list, sorting_type):
-    data_src = os.path.join(root_path, data_dir)
-    print(code_list, snr_list, sf_list, bw_list, instance_list)
-    for _, _, files in os.walk(data_src):
-        files_filtered = list(
-            filter(
-                lambda x:
-                (int(x[:-4].split('_')[1]) in snr_list) and
-                (int(x[:-4].split('_')[2]) in sf_list) and
-                (int(x[:-4].split('_')[3]) in bw_list) and
-                (int(x[:-4].split('_')[4]) in instance_list), files))
-        shuffle(files_filtered)
-    return [files_filtered, files_filtered]
-
-
 def set_gpu(free_gpu_id):
     """Converts numpy to variable."""
     torch.cuda.set_device(free_gpu_id)
